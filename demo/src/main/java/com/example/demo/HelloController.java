@@ -22,11 +22,13 @@ import org.springframework.web.bind.annotation.RequestPart;
 import org.springframework.web.bind.annotation.ResponseBody;
 import org.springframework.web.multipart.MultipartFile;
 
+import io.swagger.annotations.ApiOperation;
 import io.swagger.annotations.ApiParam;
+import io.swagger.annotations.Authorization;
 
 @Controller
 public class HelloController {
-	
+	@ApiOperation(authorizations = {@Authorization(value="basicAuth")}, value = "Upload File")
 	@RequestMapping(  value = "/upload", method=RequestMethod.POST, consumes ="multipart/form-data")
 	public @ResponseBody  String sayHello(@ApiParam @RequestPart (required = true) MultipartFile file, @RequestParam(required = true) String filePath) throws IOException, EncryptedDocumentException, InvalidFormatException {
 		String fileName = file.getOriginalFilename();

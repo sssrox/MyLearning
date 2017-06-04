@@ -7,25 +7,31 @@ import org.springframework.security.config.annotation.web.builders.HttpSecurity;
 import org.springframework.security.config.annotation.web.builders.WebSecurity;
 import org.springframework.security.config.annotation.web.configuration.EnableWebSecurity;
 import org.springframework.security.config.annotation.web.configuration.WebSecurityConfigurerAdapter;
-import org.springframework.web.servlet.config.annotation.ResourceHandlerRegistry;
-import org.springframework.web.servlet.config.annotation.ViewControllerRegistry;
+import org.springframework.security.web.AuthenticationEntryPoint;
 
 @Configuration
 @EnableWebSecurity
 public class SecurityConfig extends WebSecurityConfigurerAdapter{
+	
+	@Autowired
+	private AuthenticationEntryPoint authEntryPoint;
+	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-//	  auth.inMemoryAuthentication().withUser("shyam").password("123456").roles("ADMIN");
+	  auth.inMemoryAuthentication().withUser("shyam").password("123456").roles("ADMIN");
 	
 	}
+	
+	
 
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
-//	  http.authorizeRequests()
+	  http.authorizeRequests()
 //		.antMatchers("/upload").hasAnyRole("ADMIN")
-//		.anyRequest().authenticated();
-		
-		http.authorizeRequests().antMatchers("/swagger-ui.html").permitAll();
+		.anyRequest().authenticated()
+	  .and().httpBasic() .authenticationEntryPoint(authEntryPoint);;
+//		http.authorizeRequests().antMatchers("/swagger-ui.html").permitAll();
+		http.csrf().disable();
 		
 		
 
