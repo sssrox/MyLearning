@@ -27,9 +27,10 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	@Override
 	protected void configure(HttpSecurity http) throws Exception {
 	  http.authorizeRequests()
+	  .anyRequest().permitAll();
 //		.antMatchers("/upload").hasAnyRole("ADMIN")
-		.anyRequest().authenticated()
-	  .and().httpBasic() .authenticationEntryPoint(authEntryPoint);;
+		/*.anyRequest().authenticated()
+	  .and().httpBasic() .authenticationEntryPoint(authEntryPoint);*/
 //		http.authorizeRequests().antMatchers("/swagger-ui.html").permitAll();
 		http.csrf().disable();
 		
