@@ -18,7 +18,7 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	
 	@Autowired
 	public void configureGlobal(AuthenticationManagerBuilder auth) throws Exception {
-	  auth.inMemoryAuthentication().withUser("shyam").password("123456").roles("ADMIN");
+//	  auth.inMemoryAuthentication().withUser("shyam").password("123456").roles("ADMIN");
 	
 	}
 	
@@ -29,8 +29,8 @@ public class SecurityConfig extends WebSecurityConfigurerAdapter{
 	  http.authorizeRequests()
 	  .anyRequest().permitAll();
 //		.antMatchers("/upload").hasAnyRole("ADMIN")
-		/*.anyRequest().authenticated()
-	  .and().httpBasic() .authenticationEntryPoint(authEntryPoint);*/
+	  //.anyRequest().authenticated()
+	  //.and().httpBasic() .authenticationEntryPoint(authEntryPoint);
 //		http.authorizeRequests().antMatchers("/swagger-ui.html").permitAll();
 		http.csrf().disable();
 		

@@ -35,7 +35,7 @@ public class SwaggerConfig {
 	}
 
 	private Predicate<String> postPaths() {
-		return or(regex("/upload*") );
+		return or(regex("/test.*"));
 	}
 
 	private ApiInfo apiInfo() {
@@ -45,10 +45,10 @@ public class SwaggerConfig {
 				.licenseUrl("sssrox@gmail.com").version("1.0").build();
 	}
 	
-	@Bean
+	@Bean(name = "multipartResolver")
 	public CommonsMultipartResolver multipartResolver(){
 	    CommonsMultipartResolver multipartResolver = new CommonsMultipartResolver();
-	    multipartResolver.setDefaultEncoding("UTF-8");
+//	    multipartResolver.setDefaultEncoding("UTF-8");
 	    return multipartResolver;
 	}
 

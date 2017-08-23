@@ -7,61 +7,66 @@
    <body ng-app = "myApp">
 	
       <div ng-controller = "myCtrl">
-    <input type="file" file-model="myFile"/>
+    <input accept="*" name="file" ng-value="fileToUpload" value="{{fileToUpload}}" file-model="fileToUpload" set-file-data="fileToUpload = value;" type="file" id="my_file" />
     <button ng-click="uploadFile()">upload me</button>
 </div>
       
       <script>
         var myApp = angular.module('myApp', []);
 
-myApp.directive('fileModel', ['$parse', function ($parse) {
-    return {
-        restrict: 'A',
-        link: function(scope, element, attrs) {
-            var model = $parse(attrs.fileModel);
-            var modelSetter = model.assign;
-            
-            element.bind('change', function(){
-                scope.$apply(function(){
-                    modelSetter(scope, element[0].files[0]);
-                });
-            });
-        }
-    };
-}]);
+myApp.directive('fileModel',  function () {
+	return {
+		restrict: 'EA',
+		scope: {
+			setFileData: "&"
+		},
+		link: function(scope, ele, attrs) {
+			ele.on('change', function() {
+				scope.$apply(function() {
+					var val = ele[0].files[0];
+					scope.setFileData({ value: val });
+				});
+			});
+		}
+	}	
+});
 
-myApp.service('fileUpload', ['$http','Base64', function ($http,Base64) {
-    this.uploadFileToUrl = function(file, uploadUrl){
-        var fd = new FormData();
-        fd.append('file', file);
-		/*var data= {
-    username: 'shyam',
-    password: '123456'
-  }; 
-		fd.append('data', data);*/
-		// 'Authorization': 'Basic ' +Base64.encode('shyam:123456' ), 'Access-Control-Allow-Origin': '*'
-        $http.post(uploadUrl, fd, {
-            transformRequest: angular.identity,
-            headers: {'Content-Type': undefined} 
-        })
-        .success(function(){
-        })
-        .error(function(){
-        });
-    }
+myApp.service('fileUpload', ['$http',
+	function($http) {
+
+	      this.uploadFileToUrl = function(data) {
+	        var data = {}; //file object 
+
+	        var fd = new FormData();
+	        fd.append('file', data.file);
+
+	        $http.post("http://10.0.0.4:8080/upload", fd, {
+// 	            withCredentials: false,
+	            headers: {
+	              'Content-Type': undefined
+	            },
+	            transformRequest: angular.identity,
+	            /* params: {
+	              fd
+	            }, */
+// 	            responseType: "arraybuffer"
+	          })
+	          .success(function() {
+	            console.log("hello");
+	          })
+	          .error(function() {
+	            console.log("");
+
+	            // handle else calls
+	          });
+	      }
 }]);
 
 myApp.controller('myCtrl', ['$scope', 'fileUpload', function($scope, fileUpload){
-    
-    $scope.uploadFile = function(){
-        var file = $scope.myFile;
-        console.log('file is ' );
-        console.dir(file);
-        var uploadUrl = "http://10.0.0.3:8080/upload";
-		//var uploadUrl = "http://localhost:8080/upload?filePath=C%3A%5CUsers%5CShyam%5CDesktop%5C";
-        fileUpload.uploadFileToUrl(file, uploadUrl);
-    };
-    
+	$scope.uploadFile = function(){
+	fileUpload.uploadFileToUrl($scope.fileToUpload); 
+
+	  };
 }]);	
 
 myApp.factory('Base64', function() {

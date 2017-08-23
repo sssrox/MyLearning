@@ -8,11 +8,12 @@ import org.springframework.test.context.junit4.SpringRunner;
 
 @RunWith(SpringRunner.class)
 @SpringBootTest
-@Ignore
+//@Ignore
 public class DemoApplicationTests {
 
 	@Test
 	public void contextLoads() {
+		System.out.println("Hello Test");
 	}
 
 }
