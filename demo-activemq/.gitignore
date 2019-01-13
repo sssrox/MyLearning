@@ -1,0 +1,8 @@
+*.classpath
+*.project
+*/target
+*.class
+*.lst
+*.jar*
+*/.settings
+*org.eclipse*
