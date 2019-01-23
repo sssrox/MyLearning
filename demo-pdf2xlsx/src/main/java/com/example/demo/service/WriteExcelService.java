@@ -34,10 +34,10 @@ public class WriteExcelService {
 			}
 
 			List<String> searchArr = Arrays.asList(StringUtils.delimitedListToStringArray(searchString, "|"));
-			for (int j = 1; j <= files.size(); j++) {
+			for (int j = 0; j < files.size(); j++) {
 				Row nextRow = sheet.createRow(j);
 				for (int i = 0; i < searchArr.size(); i++) {
-					for (String line : files.get(j - 1)) {
+					for (String line : files.get(j)) {
 						if (line.contains(searchArr.get(i))) {
 							nextRow.createCell(i).setCellValue(
 									line.substring(line.lastIndexOf(searchArr.get(i)) + searchArr.get(i).length()));
