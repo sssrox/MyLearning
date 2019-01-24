@@ -1,27 +1,46 @@
 package com.example.demo.service;
 
 import java.io.File;
-import java.io.IOException;
+import java.io.FileFilter;
+import java.util.ArrayList;
+import java.util.List;
 
-import org.apache.pdfbox.pdmodel.PDDocument;
-import org.apache.pdfbox.pdmodel.encryption.InvalidPasswordException;
-import org.apache.pdfbox.text.PDFTextStripper;
+import org.apache.commons.io.filefilter.WildcardFileFilter;
+import org.springframework.beans.factory.annotation.Autowired;
+import org.springframework.beans.factory.annotation.Qualifier;
+import org.springframework.beans.factory.annotation.Value;
 import org.springframework.stereotype.Service;
 
+import com.example.demo.dao.reader.ReadPDFDao;
+
+/**
+ * @author Shyam
+ *
+ */
 @Service
 public class ReadPDFService {
 	
-//	@Value("${pdfFileName}")
-//	private String pdfFileName;
-//	
-	public String[] getPDFData(File file) throws InvalidPasswordException, IOException {
-		PDDocument document = PDDocument.load(file);
-		// PDFTextStripperByArea stripper = new PDFTextStripperByArea();
-		PDFTextStripper pdfStripper = new PDFTextStripper();
-		pdfStripper.setSortByPosition(true);
-		String text = pdfStripper.getText(document);
-		document.close();
-		String lines[] = text.split("\\r?\\n");
-		return lines;
+	@Value("${pdfDir}")
+	private String pdfDir;
+	
+	@Qualifier(value="PDFBox")
+	@Autowired
+	private ReadPDFDao radPDF;
+	
+	/**
+	 * @return List<String[]> 
+	 * List of all PDF Data as array of string from all files in Dir 
+	 */
+	public List<String[]> getPDFData()  {
+		
+		File dir = new File(pdfDir);
+		FileFilter fileFilter = new WildcardFileFilter("*.pdf");
+		File[] files = dir.listFiles(fileFilter);
+		List<String[]> pdfFiles = new ArrayList<String[]>();
+		for(File pdfFile : files) {
+			pdfFiles.add(radPDF.getPDFData(pdfFile));
+		}
+		
+		return pdfFiles;
 	}
 }

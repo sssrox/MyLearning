@@ -23,7 +23,7 @@ public class WriteExcelService {
 	@Value("${xlsFileName}")
 	private String xlsFileName;
 
-	public boolean writeExcel(List<String[]> files) throws IOException {
+	public boolean writeExcel(List<String[]> files)  {
 		XSSFWorkbook workbook = new XSSFWorkbook();
 		try {
 			XSSFSheet sheet = workbook.createSheet();
@@ -56,7 +56,12 @@ public class WriteExcelService {
 		} catch (IOException e) {
 			System.out.println(e);
 		} finally {
-			workbook.close();
+			try {
+				workbook.close();
+			} catch (IOException e) {
+				// TODO Auto-generated catch block
+				e.printStackTrace();
+			}
 		}
 		return true;
 	}
