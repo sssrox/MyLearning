@@ -54,3 +54,13 @@ To check inside a container
 docker container exec -it f27d2eca66ea bash
 
 If linux first execute apt-get update
+
+## Load Balance check using elastic
+docker pull elasticsearch:2
+create a network by name network1
+docker run -d --name elastic1 --network network1 --network-alias search -d elasticsearch:2
+docker run -d --name elastic2 --network network1 --network-alias search -d elasticsearch:2
+
+to test it install alpine os
+docker pull alpine
+docker run --net socgen alpine nslookup search
