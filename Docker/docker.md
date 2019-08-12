@@ -38,29 +38,29 @@ docker push sssrox/nginx
 To list networks  
 docker network ls  
 
-Create a Network 
+Create a Network  
 docker network create mynetwork  
 
 start a container in a network  
 docker container run -p 3000:80 --name nginx1 -d --network mynetwork nginx  
 
 ### Connecting to another network
-docker network connect mynetwork2 nginx2
+docker network connect mynetwork2 nginx2 
 
-docker network disconnect mynetwork2 nginx2
+docker network disconnect mynetwork2 nginx2  
 
 ## Execute commands in Container
-To check inside a container
-docker container exec -it f27d2eca66ea bash
+To check inside a container  
+docker container exec -it f27d2eca66ea bash  
 
 If linux first execute apt-get update
 
 ## Load Balance check using elastic
-docker pull elasticsearch:2
-create a network by name network1
-docker run -d --name elastic1 --network network1 --network-alias search -d elasticsearch:2
-docker run -d --name elastic2 --network network1 --network-alias search -d elasticsearch:2
+docker pull elasticsearch:2  
+create a network by name network1  
+docker run -d --name elastic1 --network network1 --network-alias search -d elasticsearch:2  
+docker run -d --name elastic2 --network network1 --network-alias search -d elasticsearch:2  
 
-to test it install alpine os
-docker pull alpine
-docker run --net socgen alpine nslookup search
+to test it install alpine os  
+docker pull alpine  
+docker run --net socgen alpine nslookup search  
