@@ -1,4 +1,4 @@
-12 Aug - Day 1:
+# 12 Aug - Day 1:
 docker pull nginx
 To list images:
 docker image ls
