@@ -1,48 +1,48 @@
 # 12 Aug - Day 1:
 ## Images
-docker pull nginx
-To list images:
-docker image ls
+docker pull nginx  
+To list images:  
+docker image ls  
 
 ## Container
-To install image
-docker container run -p 5000:80 nginx
+To install image  
+docker container run -p 5000:80 nginx  
 
 ### To list running containers:
-docker container ls
+docker container ls  
 
 ### To list all containers:
-docker container ls -a
+docker container ls -a  
 
 ### To Stop container:
-docker container stop f6beed46173d
-docker container stop <containerid>
+docker container stop f6beed46173d  
+docker container stop <containerid>  
 or
-docker container stop flamboyant_brattain
-docker container stop <containername>
+docker container stop flamboyant_brattain  
+docker container stop <containername>  
 
 
 ### To remove old containers 
-docker container rm f6beed46173d
+docker container rm f6beed46173d  
 
 
 ## To push the image
 
-Login into docker
-create tag:
-docker tag nginx sssrox/nginx
-docker push sssrox/nginx
+Login into docker  
+create tag:  
+docker tag nginx sssrox/nginx  
+docker push sssrox/nginx  
 
 
 ## Network
-To list networks
-docker network ls
+To list networks  
+docker network ls  
 
 Create a Network 
-docker network create mynetwork
+docker network create mynetwork  
 
-start a container in a network
-docker container run -p 3000:80 --name nginx1 -d --network mynetwork nginx
+start a container in a network  
+docker container run -p 3000:80 --name nginx1 -d --network mynetwork nginx  
 
 ### Connecting to another network
 docker network connect mynetwork2 nginx2
