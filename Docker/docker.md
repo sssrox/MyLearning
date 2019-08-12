@@ -64,3 +64,10 @@ docker run -d --name elastic2 --network network1 --network-alias search -d elast
 to test it install alpine os  
 docker pull alpine  
 docker run --net socgen alpine nslookup search  
+
+## Volumes
+### Create Volumes:
+docker volume create nginxvol  
+### Map it to container: 
+docker container run -d -p 5000:80 -v nginxvol:/usr/share/nginx/html nginx  
+
