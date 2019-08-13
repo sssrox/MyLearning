@@ -33,6 +33,9 @@ create tag:
 docker tag nginx sssrox/nginx  
 docker push sssrox/nginx  
 
+## Logs
+To check logs of container running in background  
+docker container logs f6beed46173d  
 
 ## Network
 To list networks  
